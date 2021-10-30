@@ -17,6 +17,7 @@ public class Test {
     public static void main(String[] args) {
 
             try {
+                //cao laki
                 File configFile = new File("/Users/lazardejanovic/Desktop/MyStorage/config.json");
                 File usersFile = new File("/Users/lazardejanovic/Desktop/MyStorage/users.json");
 
