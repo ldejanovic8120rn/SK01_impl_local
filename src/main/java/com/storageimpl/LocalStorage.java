@@ -9,27 +9,27 @@ import java.util.List;
 public class LocalStorage extends Storage {
 
     @Override
-    public File getConfig(String s) {
+    public File getConfig(String path) {
         return null;
     }
 
     @Override
-    public File getUsers(String s) {
+    public File getUsers(String path) {
         return null;
     }
 
     @Override
-    public void createStorage(String s, String s1, String s2, String s3) {
+    public void createStorage(String path, String storageName, String adminName, String adminPsw) {
 
     }
 
     @Override
-    public void editConfig(String s, String s1, String s2, List<String> list) {
+    public void editConfig(String path, String maxSize, String maxNumOfFiles, List<String> unsupportedFiles) {
 
     }
 
     @Override
-    public void editUsers(String s, String s1, String s2, Privilege privilege) {
+    public void editUsers(String path, String name, String password, Privilege privilege) {
 
     }
 }

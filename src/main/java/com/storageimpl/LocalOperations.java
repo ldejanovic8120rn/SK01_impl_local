@@ -8,17 +8,17 @@ import java.util.List;
 public class LocalOperations extends Operations {
 
     @Override
-    public List<FileMetadata> getAllFiles(String s) {
+    public List<FileMetadata> getAllFiles(String path) {
         return null;
     }
 
     @Override
-    public List<FileMetadata> getAllDirectories(String s) {
+    public List<FileMetadata> getAllDirectories(String path) {
         return null;
     }
 
     @Override
-    public List<FileMetadata> getAllFilesRecursive(String s) {
+    public List<FileMetadata> getAllFilesRecursive(String path) {
         return null;
     }
 
@@ -28,7 +28,7 @@ public class LocalOperations extends Operations {
     }
 
     @Override
-    public void moveFile(String s, String s1, String s2) {
+    public void moveFile(String fromPath, String toPath, String fileName) {
 
     }
 }
