@@ -17,6 +17,7 @@ public class Testing {
         try {
             //cao laki
             // komentar
+            // novo
             File configFile = new File("/Users/lazardejanovic/Desktop/MyStorage/config.json");
             File usersFile = new File("/Users/lazardejanovic/Desktop/MyStorage/users.json");
 
