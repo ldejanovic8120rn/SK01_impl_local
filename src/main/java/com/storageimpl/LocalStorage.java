@@ -20,6 +20,7 @@ public class LocalStorage extends Storage {
     public File getConfig(String path) {
 //        ClassLoader cl = getClass().getClassLoader();
 //        return new File(cl.getResource(path + "/config.json").getFile());
+
         return FileUtils.getFile(path + "/config.json");
     }
 
