@@ -30,7 +30,11 @@ public class LocalStorage extends Storage {
     }
 
     @Override
-    public void createStorage(String path, String storageName, String adminName, String adminPsw) {
+    public void createStorage(String path, String storageName, String adminName, String adminPsw) throws Exception {
+        if (StorageInfo.getStorageInfo().getUser().isLogged()) {
+            throw new Exception("Da bi se kreiralo skladiste, korisnik mora biti izlogovan");
+        }
+
         File storageDir = FileUtils.getFile(path + "/" + storageName);
         if (!storageDir.exists()) {
             try {
@@ -51,6 +55,7 @@ public class LocalStorage extends Storage {
 
         }
     }
+
 
     @Override
     public void editConfig(String path, String maxSize, String maxNumOfFiles, List<String> unsupportedFiles) {

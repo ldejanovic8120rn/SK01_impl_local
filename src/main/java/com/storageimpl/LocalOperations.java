@@ -2,6 +2,7 @@ package com.storageimpl;
 
 import com.storage.Operations;
 import com.utils.FileMetadata;
+import com.utils.Privilege;
 import com.utils.StorageInfo;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.filefilter.DirectoryFileFilter;
@@ -20,39 +21,69 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-// TODO - proveriti za sve metode da li se fajlovi i putanje nalaze u skladistu
 public class LocalOperations extends Operations {
 
     @Override
-    public List<FileMetadata> getAllFiles(String path) {
-        // /Deskto/MyStorage
-        // TODO - proveriti putanju da li postoji i da li je logovan
+    public List<FileMetadata> getAllFiles(String path) throws Exception {
         path = StorageInfo.getStorageInfo().getConfig().getPath() + path;
+
+        if (!StorageInfo.getStorageInfo().checkUser()) {
+            throw new Exception("Korisnik nije logovan");
+        }
+
+        if (!LocalFileChecker.getLFC().ckeckStoragePath(path)) {
+            throw new Exception("Ne postoji zadata putanja u skladistu");
+        }
+
         List<File> files = (List<File>) FileUtils.listFiles(new File(path), HiddenFileFilter.VISIBLE, FalseFileFilter.FALSE);
         return getFileMetadata(files);
     }
 
     @Override
-    public List<FileMetadata> getAllDirectories(String path) {
-        // TODO - proveriti putanju da li postoji i da li je logovan
+    public List<FileMetadata> getAllDirectories(String path) throws Exception {
         path = StorageInfo.getStorageInfo().getConfig().getPath() + path;
+
+        if (!StorageInfo.getStorageInfo().checkUser()) {
+            throw new Exception("Korisnik nije logovan");
+        }
+
+        if (!LocalFileChecker.getLFC().ckeckStoragePath(path)) {
+            throw new Exception("Ne postoji zadata putanja u skladistu");
+        }
+
         File directory = new File(path);
         File[] files = directory.listFiles((FileFilter) DirectoryFileFilter.DIRECTORY);
         return getFileMetadata(Arrays.asList(files));
     }
 
     @Override
-    public List<FileMetadata> getAllFilesRecursive(String path) {
-        // TODO - proveriti putanju da li postoji i da li je logovan
+    public List<FileMetadata> getAllFilesRecursive(String path) throws Exception {
         path = StorageInfo.getStorageInfo().getConfig().getPath() + path;
+
+        if (!StorageInfo.getStorageInfo().checkUser()) {
+            throw new Exception("Korisnik nije logovan");
+        }
+
+        if (!LocalFileChecker.getLFC().ckeckStoragePath(path)) {
+            throw new Exception("Ne postoji zadata putanja u skladistu");
+        }
+
         List<File> files = (List<File>) FileUtils.listFiles(new File(path), HiddenFileFilter.VISIBLE, TrueFileFilter.TRUE);
         return getFileMetadata(files);
     }
 
     @Override
-    public void download(String path) {
-        // TODO - proveriti putanju da li postoji i da li je logovan
+    public void download(String path) throws Exception {
         path = StorageInfo.getStorageInfo().getConfig().getPath() + path;
+
+        if (!StorageInfo.getStorageInfo().checkUser(Privilege.ADMIN, Privilege.RDCD, Privilege.RD)) {
+            throw new Exception("Korisnik nije logovan ili nema privilegiju");
+        }
+
+        if (!LocalFileChecker.getLFC().ckeckStoragePath(path)) {
+            throw new Exception("Ne postoji zadata putanja u skladistu");
+        }
+
         File file = new File(path);
 
         try {
@@ -69,9 +100,21 @@ public class LocalOperations extends Operations {
     }
 
     @Override
-    public void uploadFile(String fromPath, String toPath) {
-        // TODO - proveriti putanju da li postoji i da li je logovan
+    public void uploadFile(String fromPath, String toPath) throws Exception {
         toPath = StorageInfo.getStorageInfo().getConfig().getPath() + toPath;
+
+        if (!StorageInfo.getStorageInfo().checkUser(Privilege.ADMIN, Privilege.RDCD)) {
+            throw new Exception("Korisnik nije logovan ili nema privilegiju");
+        }
+
+        if (!LocalFileChecker.getLFC().ckeckPath(fromPath)) {
+            throw new Exception("Fajl ne postoji ili se nalazi u okviru trenutnog skladista");
+        }
+
+        if (!LocalFileChecker.getLFC().ckeckStoragePath(toPath)) {
+            throw new Exception("Ne postoji zadata putanja u skladistu");
+        }
+
         File file = new File(fromPath);
 
         try {
@@ -88,8 +131,23 @@ public class LocalOperations extends Operations {
     }
 
     @Override
-    public void moveFile(String fromPath, String toPath) {
+    public void moveFile(String fromPath, String toPath) throws Exception {
+        fromPath = StorageInfo.getStorageInfo().getConfig().getPath() + fromPath;
+        toPath = StorageInfo.getStorageInfo().getConfig().getPath() + toPath;
+
         File file = new File(fromPath);
+
+        if (!StorageInfo.getStorageInfo().checkUser(Privilege.ADMIN, Privilege.RDCD)) {
+            throw new Exception("Korisnik nije logovan ili nema privilegiju");
+        }
+
+        if (!LocalFileChecker.getLFC().ckeckStoragePath(fromPath)) {
+            throw new Exception("Ne postoji zadata putanja u skladistu za - fromPath");
+        }
+
+        if (!LocalFileChecker.getLFC().ckeckStoragePath(toPath)) {
+            throw new Exception("Ne postoji zadata putanja u skladistu za - toPath");
+        }
 
         try {
             if (file.isDirectory()) {
