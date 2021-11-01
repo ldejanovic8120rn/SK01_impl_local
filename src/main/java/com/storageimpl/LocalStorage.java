@@ -23,7 +23,6 @@ public class LocalStorage extends Storage {
 
         return FileUtils.getFile(path + "/config.json");
     }
-
     @Override
     public File getUsers(String path) {
         ClassLoader cl = getClass().getClassLoader();
