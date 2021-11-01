@@ -2,6 +2,7 @@ package com.storageimpl;
 
 import com.storage.Operations;
 import com.utils.FileMetadata;
+import com.utils.StorageInfo;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.filefilter.DirectoryFileFilter;
 import org.apache.commons.io.filefilter.FalseFileFilter;
@@ -24,25 +25,34 @@ public class LocalOperations extends Operations {
 
     @Override
     public List<FileMetadata> getAllFiles(String path) {
+        // /Deskto/MyStorage
+        // TODO - proveriti putanju da li postoji i da li je logovan
+        path = StorageInfo.getStorageInfo().getConfig().getPath() + path;
         List<File> files = (List<File>) FileUtils.listFiles(new File(path), HiddenFileFilter.VISIBLE, FalseFileFilter.FALSE);
         return getFileMetadata(files);
     }
 
     @Override
     public List<FileMetadata> getAllDirectories(String path) {
-        File directory = new File("/Users/lazardejanovic/Desktop/MyStorage");
+        // TODO - proveriti putanju da li postoji i da li je logovan
+        path = StorageInfo.getStorageInfo().getConfig().getPath() + path;
+        File directory = new File(path);
         File[] files = directory.listFiles((FileFilter) DirectoryFileFilter.DIRECTORY);
         return getFileMetadata(Arrays.asList(files));
     }
 
     @Override
     public List<FileMetadata> getAllFilesRecursive(String path) {
+        // TODO - proveriti putanju da li postoji i da li je logovan
+        path = StorageInfo.getStorageInfo().getConfig().getPath() + path;
         List<File> files = (List<File>) FileUtils.listFiles(new File(path), HiddenFileFilter.VISIBLE, TrueFileFilter.TRUE);
         return getFileMetadata(files);
     }
 
     @Override
     public void download(String path) {
+        // TODO - proveriti putanju da li postoji i da li je logovan
+        path = StorageInfo.getStorageInfo().getConfig().getPath() + path;
         File file = new File(path);
 
         try {
@@ -60,6 +70,8 @@ public class LocalOperations extends Operations {
 
     @Override
     public void uploadFile(String fromPath, String toPath) {
+        // TODO - proveriti putanju da li postoji i da li je logovan
+        toPath = StorageInfo.getStorageInfo().getConfig().getPath() + toPath;
         File file = new File(fromPath);
 
         try {

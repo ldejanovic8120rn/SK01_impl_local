@@ -94,9 +94,9 @@ public class LocalStorage extends Storage {
         Map<String, Object> configMap = new HashMap<>();
         configMap.put("path", path);
         configMap.put("admin", adminName);
-        configMap.put("maxSize", null);
-        configMap.put("maxNumOfFiles", null);
-        configMap.put("unsupportedFiles", null);
+        configMap.put("maxSize", "UN");
+        configMap.put("maxNumOfFiles", "UN");
+        configMap.put("unsupportedFiles", null);  // proveriti da li pravi praznu listu
 
         try {
             Writer writer = new FileWriter(configFile);
