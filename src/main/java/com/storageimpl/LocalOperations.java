@@ -115,7 +115,19 @@ public class LocalOperations extends Operations {
             throw new Exception("Ne postoji zadata putanja u skladistu");
         }
 
+        String extension = fromPath.split("/")[fromPath.split("/").length - 1].split("\\.")[1];
+        if (!LocalFileChecker.getLFC().ckeckExtention(extension)) {
+            throw new Exception("Nedozvoljena ekstenzija");
+        }
+
+        if (!LocalFileChecker.getLFC().checkNumOfFiles()) {
+            throw new Exception("Prekoracen broj fajlova");
+        }
+
         File file = new File(fromPath);
+        if (!LocalFileChecker.getLFC().checkMaxSize(FileUtils.sizeOf(file))) {
+            throw new Exception("Prekoracena velicina skladista");
+        }
 
         try {
             if (file.isDirectory()) {

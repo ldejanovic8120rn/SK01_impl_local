@@ -23,8 +23,21 @@ public class LocalCreate extends Create {
     }
 
     @Override
-    public void saveFile(String fileName) {
+    public void saveFile(String fileName) throws Exception {
         File file = new File(StorageInfo.getStorageInfo().getConfig().getPath() + fileName);
+
+        String extension = fileName.split("\\.")[1];
+        if (!LocalFileChecker.getLFC().ckeckExtention(extension)) {
+            throw new Exception("Nedozvoljena ekstenzija");
+        }
+
+        if (!LocalFileChecker.getLFC().checkNumOfFiles()) {
+            throw new Exception("Prekoracen broj fajlova");
+        }
+
+        if (!LocalFileChecker.getLFC().checkMaxSize(FileUtils.sizeOf(file))) {
+            throw new Exception("Prekoracena velicina skladista");
+        }
 
         try {
             FileUtils.touch(file);
