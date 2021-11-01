@@ -1,6 +1,7 @@
 package com.storageimpl;
 
 import com.storage.Create;
+import com.utils.StorageInfo;
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
@@ -9,8 +10,8 @@ import java.io.IOException;
 public class LocalCreate extends Create {
 
     @Override
-    public void saveDirectory(String path, String directoryName) {
-        File dir = FileUtils.getFile(path + "/" + directoryName);
+    public void saveDirectory(String directoryName) {
+        File dir = FileUtils.getFile(StorageInfo.getStorageInfo().getConfig().getPath() + directoryName);
         if (!dir.exists()) {
             try {
                 FileUtils.forceMkdir(dir);
@@ -22,8 +23,8 @@ public class LocalCreate extends Create {
     }
 
     @Override
-    public void saveFile(String path, String fileName) {
-        File file = new File(path + "/" + fileName);
+    public void saveFile(String fileName) {
+        File file = new File(StorageInfo.getStorageInfo().getConfig().getPath() + fileName);
 
         try {
             FileUtils.touch(file);

@@ -1,6 +1,7 @@
 package com.storageimpl;
 
 import com.storage.Delete;
+import com.utils.StorageInfo;
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
@@ -9,8 +10,8 @@ import java.io.IOException;
 public class LocalDelete extends Delete {
 
     @Override
-    public void deleteDirectory(String path, String directoryName) {
-        File dir = new File(path + "/" + directoryName);
+    public void deleteDirectory(String directoryName) {
+        File dir = new File(StorageInfo.getStorageInfo().getConfig().getPath() + directoryName);
 
         if (FileUtils.isDirectory(dir)) {
             try {
@@ -24,8 +25,8 @@ public class LocalDelete extends Delete {
     }
 
     @Override
-    public void deleteFile(String path, String fileName) {
-        File file = new File(path + "/" + fileName);
+    public void deleteFile(String fileName) {
+        File file = new File(StorageInfo.getStorageInfo().getConfig().getPath() + fileName);
 
         try {
             FileUtils.delete(file);
