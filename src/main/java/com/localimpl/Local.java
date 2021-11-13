@@ -8,4 +8,5 @@ public class Local {
         StorageManager.registerStorage(new LocalStorage(), new LocalCreate(), new LocalDelete(), new LocalOperations());
     }
 
+    private Local() {}
 }
