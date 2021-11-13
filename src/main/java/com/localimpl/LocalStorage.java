@@ -1,4 +1,4 @@
-package com.storageimpl;
+package com.localimpl;
 
 import com.exception.LogException;
 import com.google.gson.Gson;

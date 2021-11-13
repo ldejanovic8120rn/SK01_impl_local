@@ -1,4 +1,4 @@
-package com.storageimpl;
+package com.localimpl;
 
 import com.StorageManager;
 

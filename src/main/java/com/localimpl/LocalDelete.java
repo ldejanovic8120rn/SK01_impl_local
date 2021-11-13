@@ -1,4 +1,4 @@
-package com.storageimpl;
+package com.localimpl;
 
 import com.storage.Delete;
 import com.utils.StorageInfo;

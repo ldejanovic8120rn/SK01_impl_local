@@ -1,4 +1,4 @@
-package com.storageimpl;
+package com.localimpl;
 
 import com.exception.ConfigException;
 import com.exception.LogException;
@@ -18,7 +18,6 @@ import java.io.FileFilter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.attribute.BasicFileAttributes;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
