@@ -1,5 +1,8 @@
 package com.storageimpl;
 
+import com.exception.ConfigException;
+import com.exception.LogException;
+import com.exception.PathException;
 import com.storage.Operations;
 import com.utils.FileMetadata;
 import com.utils.Privilege;
@@ -28,11 +31,11 @@ public class LocalOperations extends Operations {
         path = StorageInfo.getStorageInfo().getConfig().getPath() + path;
 
         if (!StorageInfo.getStorageInfo().checkUser()) {
-            throw new Exception("Korisnik nije logovan");
+            throw new LogException("User not logged");
         }
 
         if (!LocalFileChecker.getLFC().ckeckStoragePath(path)) {
-            throw new Exception("Ne postoji zadata putanja u skladistu");
+            throw new PathException("Given path doesn't exist");
         }
 
         List<File> files = (List<File>) FileUtils.listFiles(new File(path), HiddenFileFilter.VISIBLE, FalseFileFilter.FALSE);
@@ -44,11 +47,11 @@ public class LocalOperations extends Operations {
         path = StorageInfo.getStorageInfo().getConfig().getPath() + path;
 
         if (!StorageInfo.getStorageInfo().checkUser()) {
-            throw new Exception("Korisnik nije logovan");
+            throw new LogException("User not logged");
         }
 
         if (!LocalFileChecker.getLFC().ckeckStoragePath(path)) {
-            throw new Exception("Ne postoji zadata putanja u skladistu");
+            throw new PathException("Given path doesn't exist");
         }
 
         File directory = new File(path);
@@ -61,11 +64,11 @@ public class LocalOperations extends Operations {
         path = StorageInfo.getStorageInfo().getConfig().getPath() + path;
 
         if (!StorageInfo.getStorageInfo().checkUser()) {
-            throw new Exception("Korisnik nije logovan");
+            throw new LogException("User not logged");
         }
 
         if (!LocalFileChecker.getLFC().ckeckStoragePath(path)) {
-            throw new Exception("Ne postoji zadata putanja u skladistu");
+            throw new PathException("Given path doesn't exist");
         }
 
         List<File> files = (List<File>) FileUtils.listFiles(new File(path), HiddenFileFilter.VISIBLE, TrueFileFilter.TRUE);
@@ -77,11 +80,11 @@ public class LocalOperations extends Operations {
         path = StorageInfo.getStorageInfo().getConfig().getPath() + path;
 
         if (!StorageInfo.getStorageInfo().checkUser(Privilege.ADMIN, Privilege.RDCD, Privilege.RD)) {
-            throw new Exception("Korisnik nije logovan ili nema privilegiju");
+            throw new LogException("User isn't logged or doesn't have permission");
         }
 
         if (!LocalFileChecker.getLFC().ckeckStoragePath(path)) {
-            throw new Exception("Ne postoji zadata putanja u skladistu");
+            throw new PathException("Given path doesn't exist");
         }
 
         File file = new File(path);
@@ -104,29 +107,29 @@ public class LocalOperations extends Operations {
         toPath = StorageInfo.getStorageInfo().getConfig().getPath() + toPath;
 
         if (!StorageInfo.getStorageInfo().checkUser(Privilege.ADMIN, Privilege.RDCD)) {
-            throw new Exception("Korisnik nije logovan ili nema privilegiju");
+            throw new LogException("User isn't logged or doesn't have permission");
         }
 
         if (!LocalFileChecker.getLFC().ckeckPath(fromPath)) {
-            throw new Exception("Fajl ne postoji ili se nalazi u okviru trenutnog skladista");
+            throw new PathException("File doesn't exist or is out of storage");
         }
 
         if (!LocalFileChecker.getLFC().ckeckStoragePath(toPath)) {
-            throw new Exception("Ne postoji zadata putanja u skladistu");
+            throw new PathException("Given path doesn't exist");
         }
 
         String extension = fromPath.split("/")[fromPath.split("/").length - 1].split("\\.")[1];
         if (!LocalFileChecker.getLFC().ckeckExtention(extension)) {
-            throw new Exception("Nedozvoljena ekstenzija");
+            throw new ConfigException("Extension not supported");
         }
 
         if (!LocalFileChecker.getLFC().checkNumOfFiles()) {
-            throw new Exception("Prekoracen broj fajlova");
+            throw new ConfigException("File number exceeded");
         }
 
         File file = new File(fromPath);
         if (!LocalFileChecker.getLFC().checkMaxSize(FileUtils.sizeOf(file))) {
-            throw new Exception("Prekoracena velicina skladista");
+            throw new ConfigException("Storage size exceeded");
         }
 
         try {
@@ -150,15 +153,15 @@ public class LocalOperations extends Operations {
         File file = new File(fromPath);
 
         if (!StorageInfo.getStorageInfo().checkUser(Privilege.ADMIN, Privilege.RDCD)) {
-            throw new Exception("Korisnik nije logovan ili nema privilegiju");
+            throw new LogException("User isn't logged or doesn't have permission");
         }
 
         if (!LocalFileChecker.getLFC().ckeckStoragePath(fromPath)) {
-            throw new Exception("Ne postoji zadata putanja u skladistu za - fromPath");
+            throw new PathException(fromPath + " isn't valid path");
         }
 
         if (!LocalFileChecker.getLFC().ckeckStoragePath(toPath)) {
-            throw new Exception("Ne postoji zadata putanja u skladistu za - toPath");
+            throw new PathException(toPath + " isn't valid path");
         }
 
         try {

@@ -1,5 +1,6 @@
 package com.storageimpl;
 
+import com.exception.LogException;
 import com.google.gson.Gson;
 import com.storage.Storage;
 import com.utils.Privilege;
@@ -32,7 +33,7 @@ public class LocalStorage extends Storage {
     @Override
     public void createStorage(String path, String storageName, String adminName, String adminPsw) throws Exception {
         if (StorageInfo.getStorageInfo().getUser().isLogged()) {
-            throw new Exception("Da bi se kreiralo skladiste, korisnik mora biti izlogovan");
+            throw new LogException("User must be logged out to create a new storage");
         }
 
         File storageDir = FileUtils.getFile(path + "/" + storageName);

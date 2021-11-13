@@ -1,5 +1,6 @@
 package com.storageimpl;
 
+import com.exception.ConfigException;
 import com.storage.Create;
 import com.utils.StorageInfo;
 import org.apache.commons.io.FileUtils;
@@ -28,15 +29,15 @@ public class LocalCreate extends Create {
 
         String extension = fileName.split("\\.")[1];
         if (!LocalFileChecker.getLFC().ckeckExtention(extension)) {
-            throw new Exception("Nedozvoljena ekstenzija");
+            throw new ConfigException("Extension not supported");
         }
 
         if (!LocalFileChecker.getLFC().checkNumOfFiles()) {
-            throw new Exception("Prekoracen broj fajlova");
+            throw new ConfigException("File number exceeded");
         }
 
         if (!LocalFileChecker.getLFC().checkMaxSize(FileUtils.sizeOf(file))) {
-            throw new Exception("Prekoracena velicina skladista");
+            throw new ConfigException("Storage size exceeded");
         }
 
         try {
