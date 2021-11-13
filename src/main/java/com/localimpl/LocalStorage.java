@@ -2,6 +2,8 @@ package com.localimpl;
 
 import com.exception.LogException;
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.storage.Storage;
 import com.utils.Privilege;
 import com.utils.StorageInfo;
@@ -19,15 +21,11 @@ public class LocalStorage extends Storage {
 
     @Override
     public File getConfig(String path) {
-//        ClassLoader cl = getClass().getClassLoader();
-//        return new File(cl.getResource(path + "/config.json").getFile());
-
         return FileUtils.getFile(path + "/config.json");
     }
     @Override
     public File getUsers(String path) {
-        ClassLoader cl = getClass().getClassLoader();
-        return new File(cl.getResource(path + "/users.json").getFile());
+        return FileUtils.getFile(path + "/users.json");
     }
 
     @Override
@@ -114,14 +112,16 @@ public class LocalStorage extends Storage {
     }
 
     private void initUsers(File usersFile, String adminName, String adminPsw) {
-        Map<String, Object> usersMap = new HashMap<>();
-        usersMap.put("name", adminName);
-        usersMap.put("password", adminPsw);
-        usersMap.put("privilege", Privilege.ADMIN);
+        JsonObject user = new JsonObject();
+        user.addProperty("name", adminName);
+        user.addProperty("password", adminPsw);
+        user.addProperty("privilege", String.valueOf(Privilege.ADMIN));
 
+        JsonArray jsonArray = new JsonArray();
+        jsonArray.add(user);
         try {
             Writer writer = new FileWriter(usersFile);
-            new Gson().toJson(usersMap, writer);
+            new Gson().toJson(jsonArray, writer);
             writer.close();
         }
         catch (IOException e) {

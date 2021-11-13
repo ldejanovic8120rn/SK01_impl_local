@@ -52,7 +52,7 @@ public class LocalFileChecker extends FileChecker {
 
     @Override
     public boolean ckeckExtention(String extension) {
-        return StorageInfo.getStorageInfo().getConfig().getUnsupportedFiles().contains(extension);
+        return !StorageInfo.getStorageInfo().getConfig().getUnsupportedFiles().contains(extension);
     }
 
     private int countFiles(String rootPath, int counter) {
