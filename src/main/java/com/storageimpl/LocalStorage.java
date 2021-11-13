@@ -57,7 +57,6 @@ public class LocalStorage extends Storage {
         }
     }
 
-
     @Override
     public void editConfig(String path, String maxSize, String maxNumOfFiles, List<String> unsupportedFiles) {
         Map<String, Object> configMap = new HashMap<>();
