@@ -7,6 +7,7 @@ import org.apache.commons.io.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 
 public class LocalCreate extends Create {
 
@@ -25,8 +26,6 @@ public class LocalCreate extends Create {
 
     @Override
     public void saveFile(String fileName) throws Exception {
-        File file = new File(StorageInfo.getStorageInfo().getConfig().getPath() + fileName);
-
         String extension = fileName.split("\\.")[1];
         if (!LocalFileChecker.getLFC().ckeckExtention(extension)) {
             throw new ConfigException("Extension not supported");
@@ -36,12 +35,8 @@ public class LocalCreate extends Create {
             throw new ConfigException("File number exceeded");
         }
 
-        if (!LocalFileChecker.getLFC().checkMaxSize(FileUtils.sizeOf(file))) {
-            throw new ConfigException("Storage size exceeded");
-        }
-
         try {
-            FileUtils.touch(file);
+            FileUtils.touch(new File(StorageInfo.getStorageInfo().getConfig().getPath() + fileName));
         }
         catch (IOException e) {
             e.printStackTrace();
