@@ -9,10 +9,7 @@ import com.utils.Privilege;
 import com.utils.StorageInfo;
 import org.apache.commons.io.FileUtils;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.Writer;
+import java.io.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -76,15 +73,22 @@ public class LocalStorage extends Storage {
 
     @Override
     public void editUsers(String path, String name, String password, Privilege privilege) {
-        Map<String, Object> usersMap = new HashMap<>();
-        usersMap.put("name", name);
-        usersMap.put("password", password);
-        usersMap.put("privilege", privilege);
+        JsonObject user = new JsonObject();
+        user.addProperty("name", name);
+        user.addProperty("password", password);
+        user.addProperty("privilege", String.valueOf(privilege));
 
         try {
-            Writer writer = new FileWriter(path + "/users.json", true);
+            BufferedReader bufferedReader = new BufferedReader(new FileReader(getUsers(path)));
+            String line = bufferedReader.readLine();
+            line = line.replace("]", "");
+
+            Writer writer = new FileWriter(path + "/users.json", false);
+            writer.append(line);
             writer.append(",");
-            new Gson().toJson(usersMap, writer);
+
+            new Gson().toJson(user, writer);
+            writer.append("]");
             writer.close();
         }
         catch (IOException e) {
