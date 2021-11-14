@@ -29,7 +29,7 @@ public class LocalOperations extends Operations {
     public List<FileMetadata> getAllFiles(String path) throws Exception {
         path = StorageInfo.getStorageInfo().getConfig().getPath() + path;
 
-        if (!StorageInfo.getStorageInfo().checkUser()) {
+        if (!StorageInfo.getStorageInfo().checkUser(Privilege.ADMIN, Privilege.RDCD, Privilege.RD, Privilege.RO)) {
             throw new LogException("User not logged");
         }
 
