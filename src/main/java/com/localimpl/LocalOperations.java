@@ -45,7 +45,7 @@ public class LocalOperations extends Operations {
     public List<FileMetadata> getAllDirectories(String path) throws Exception {
         path = StorageInfo.getStorageInfo().getConfig().getPath() + path;
 
-        if (!StorageInfo.getStorageInfo().checkUser()) {
+        if (!StorageInfo.getStorageInfo().checkUser(Privilege.ADMIN, Privilege.RDCD, Privilege.RD, Privilege.RO)) {
             throw new LogException("User not logged");
         }
 
@@ -62,7 +62,7 @@ public class LocalOperations extends Operations {
     public List<FileMetadata> getAllFilesRecursive(String path) throws Exception {
         path = StorageInfo.getStorageInfo().getConfig().getPath() + path;
 
-        if (!StorageInfo.getStorageInfo().checkUser()) {
+        if (!StorageInfo.getStorageInfo().checkUser(Privilege.ADMIN, Privilege.RDCD, Privilege.RD, Privilege.RO)) {
             throw new LogException("User not logged");
         }
 
@@ -90,10 +90,10 @@ public class LocalOperations extends Operations {
 
         try {
             if (file.isDirectory()) {
-                FileUtils.moveDirectoryToDirectory(file, new File("./"), false);
+                FileUtils.copyDirectoryToDirectory(file, new File("./"));
             }
             else {
-                FileUtils.moveFileToDirectory(file, new File("./"), false);
+                FileUtils.copyFileToDirectory(file, new File("./"), true);
             }
         }
         catch (IOException e) {
