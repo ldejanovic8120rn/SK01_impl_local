@@ -117,9 +117,11 @@ public class LocalOperations extends Operations {
             throw new PathException("Given path doesn't exist");
         }
 
-        String extension = fromPath.split("/")[fromPath.split("/").length - 1].split("\\.")[1];
-        if (!LocalFileChecker.getLFC().ckeckExtention(extension)) {
-            throw new ConfigException("Extension not supported");
+        if (fromPath.contains("\\.")) {
+            String extension = fromPath.split("/")[fromPath.split("/").length - 1].split("\\.")[1];
+            if (!LocalFileChecker.getLFC().ckeckExtention(extension)) {
+                throw new ConfigException("Extension not supported");
+            }
         }
 
         if (!LocalFileChecker.getLFC().checkNumOfFiles()) {
@@ -133,10 +135,10 @@ public class LocalOperations extends Operations {
 
         try {
             if (file.isDirectory()) {
-                FileUtils.moveDirectoryToDirectory(file, new File(toPath), false);
+                FileUtils.copyDirectoryToDirectory(file, new File(toPath));
             }
             else {
-                FileUtils.moveFileToDirectory(file, new File(toPath), false);
+                FileUtils.copyFileToDirectory(file, new File(toPath), true);
             }
         }
         catch (IOException e) {
