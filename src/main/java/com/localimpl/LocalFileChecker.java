@@ -63,7 +63,7 @@ public class LocalFileChecker extends FileChecker {
                 continue;
             }
 
-            if (file.isDirectory()) {
+            if (file.isDirectory()) {  //rekurzivno racunamo broj fajlova
                 counter = countFiles(file.getPath(), counter);
             }
             else {
