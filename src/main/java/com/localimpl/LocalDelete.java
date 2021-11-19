@@ -42,8 +42,9 @@ public class LocalDelete extends Delete {
         File dir = new File(rootPath);
 
         for (File file: dir.listFiles()) {
-            if (file.isDirectory())
+            if (file.isDirectory()) {  //rekurzivno prolazimo za direktorijume i brisemo ih
                 deleteAll(file.getPath());
+            }
             if (!(file.getName().equals("config.json") || file.getName().equals("users.json"))) {
                 file.delete();
             }

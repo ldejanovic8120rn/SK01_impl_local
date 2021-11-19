@@ -31,19 +31,19 @@ public class LocalStorage extends Storage {
             throw new LogException("User must be logged out to create a new storage");
         }
 
-        File storageDir = FileUtils.getFile(path + "/" + storageName);
+        File storageDir = FileUtils.getFile(path + "/" + storageName);  //uzmemo skldiste
         if (!storageDir.exists()) {
             try {
-                FileUtils.forceMkdir(storageDir);
+                FileUtils.forceMkdir(storageDir);  //napravimo ga
 
-                File configFile = new File(path + "/" + storageName + "/config.json");
-                File usersFile = new File(path + "/" + storageName + "/users.json");
+                File configFile = new File(path + "/" + storageName + "/config.json");  //kreiramo config.json
+                File usersFile = new File(path + "/" + storageName + "/users.json");  //kreiramo users.json
 
                 initConfig(configFile, path + "/" + storageName, adminName);
                 initUsers(usersFile, adminName, adminPsw);
 
-                FileUtils.touch(configFile);
-                FileUtils.touch(usersFile);
+                FileUtils.touch(configFile);  //napravimo config.json u skladistu
+                FileUtils.touch(usersFile);  //napravimo users.json u skladistu
             }
             catch (IOException e) {
                 e.printStackTrace();
@@ -103,7 +103,7 @@ public class LocalStorage extends Storage {
         configMap.put("admin", adminName);
         configMap.put("maxSize", "UN");
         configMap.put("maxNumOfFiles", "UN");
-        configMap.put("unsupportedFiles", null);  // proveriti da li pravi praznu listu
+        configMap.put("unsupportedFiles", null);
 
         try {
             Writer writer = new FileWriter(configFile);

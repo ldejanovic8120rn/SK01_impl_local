@@ -27,7 +27,7 @@ public class LocalOperations extends Operations {
 
     @Override
     public List<FileMetadata> getAllFiles(String path) throws Exception {
-        path = StorageInfo.getStorageInfo().getConfig().getPath() + path;
+        path = StorageInfo.getStorageInfo().getConfig().getPath() + path;  //konkatenacija putanje do skladista + relativna putanja u skladistu
 
         if (!StorageInfo.getStorageInfo().checkUser(Privilege.ADMIN, Privilege.RDCD, Privilege.RD, Privilege.RO)) {
             throw new LogException("User not logged");
@@ -43,7 +43,7 @@ public class LocalOperations extends Operations {
 
     @Override
     public List<FileMetadata> getAllDirectories(String path) throws Exception {
-        path = StorageInfo.getStorageInfo().getConfig().getPath() + path;
+        path = StorageInfo.getStorageInfo().getConfig().getPath() + path;  //konkatenacija putanje do skladista + relativna putanja u skladistu
 
         if (!StorageInfo.getStorageInfo().checkUser(Privilege.ADMIN, Privilege.RDCD, Privilege.RD, Privilege.RO)) {
             throw new LogException("User not logged");
@@ -60,7 +60,7 @@ public class LocalOperations extends Operations {
 
     @Override
     public List<FileMetadata> getAllFilesRecursive(String path) throws Exception {
-        path = StorageInfo.getStorageInfo().getConfig().getPath() + path;
+        path = StorageInfo.getStorageInfo().getConfig().getPath() + path;  //konkatenacija putanje do skladista + relativna putanja u skladistu
 
         if (!StorageInfo.getStorageInfo().checkUser(Privilege.ADMIN, Privilege.RDCD, Privilege.RD, Privilege.RO)) {
             throw new LogException("User not logged");
@@ -76,7 +76,7 @@ public class LocalOperations extends Operations {
 
     @Override
     public void download(String path) throws Exception {
-        path = StorageInfo.getStorageInfo().getConfig().getPath() + path;
+        path = StorageInfo.getStorageInfo().getConfig().getPath() + path;  //konkatenacija putanje do skladista + relativna putanja u skladistu
 
         if (!StorageInfo.getStorageInfo().checkUser(Privilege.ADMIN, Privilege.RDCD, Privilege.RD)) {
             throw new LogException("User isn't logged or doesn't have permission");
@@ -103,7 +103,7 @@ public class LocalOperations extends Operations {
 
     @Override
     public void uploadFile(String fromPath, String toPath) throws Exception {
-        toPath = StorageInfo.getStorageInfo().getConfig().getPath() + toPath;
+        toPath = StorageInfo.getStorageInfo().getConfig().getPath() + toPath;  //konkatenacija putanje do skladista + relativna putanja u skladistu
 
         if (!StorageInfo.getStorageInfo().checkUser(Privilege.ADMIN, Privilege.RDCD)) {
             throw new LogException("User isn't logged or doesn't have permission");
@@ -148,8 +148,8 @@ public class LocalOperations extends Operations {
 
     @Override
     public void moveFile(String fromPath, String toPath) throws Exception {
-        fromPath = StorageInfo.getStorageInfo().getConfig().getPath() + fromPath;
-        toPath = StorageInfo.getStorageInfo().getConfig().getPath() + toPath;
+        fromPath = StorageInfo.getStorageInfo().getConfig().getPath() + fromPath;  //konkatenacija putanje do skladista + relativna putanja u skladistu
+        toPath = StorageInfo.getStorageInfo().getConfig().getPath() + toPath;  //konkatenacija putanje do skladista + relativna putanja u skladistu
 
         File file = new File(fromPath);
 
